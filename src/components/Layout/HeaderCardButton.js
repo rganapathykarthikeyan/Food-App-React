@@ -7,16 +7,32 @@ import CartContext from "../../store/cartContext";
 
 const HeaderCardButton = (props) => {
 
+  const [btnHighLighted , isBtnHighLighted] = useState(false);
 
   const cartCtx = useContext(CartContext);
 
-  const numberofCartItems = cartCtx.items.reduce((curNumber, item) => {
+  const {items} = cartCtx;
+
+  const numberofCartItems = items.reduce((curNumber, item) => {
     return curNumber + item.amount;
   }, 0);
 
-  const btnsty = `${classes.button}`
+  const btnsty = `${classes.button} ${btnHighLighted ? classes.bump : ''}`
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    if (items.length === 0){
+      return;
+    }
+    isBtnHighLighted(true);
+
+    const timer = setTimeout(() => {
+      isBtnHighLighted(false); 
+    }, 300);
+
+    return () => {
+      clearTimeout(timer); // Clean up function for the timer 
+    } 
+  }, [items]);
 
   return (
     <button className={btnsty} onClick={props.onPressed}>

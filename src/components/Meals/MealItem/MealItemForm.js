@@ -7,13 +7,12 @@ const MealItemForm = (props) => {
   const [amountIsValid, setIsValid] = useState(true)
   const amountInputRef = useRef();
 
-  
 
   const sumbitHandler = (event) => {
+    
     event.preventDefault();
     const enteredAmount = amountInputRef.current.value;
     const enteredAmountToNumber = +enteredAmount; //to convert the string we get from ref to a number
-
     if (enteredAmount.trim().length === 0 || enteredAmountToNumber < 1 || enteredAmountToNumber > 5) {
       setIsValid(false);
       return; 
